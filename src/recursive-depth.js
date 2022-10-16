@@ -17,13 +17,23 @@ class DepthCalculator {
     this.deph = 1;
   }
   calculateDepth(arr) {
-    throw new NotImplementedError('Not implemented');
-    // for (let elem of arr) {
-    //   if (Array.isArray(elem)) {
-    //     this.deph++;
-    //     this.calculateDepth(elem);
-    //   }
-    // }
+    let currDeph = 1;
+    let maxDeph = 1;
+
+    function findMax(arr) {
+      arr.forEach(e => {
+        if (Array.isArray(e)) {
+          currDeph++;
+          if (currDeph > maxDeph) maxDeph = currDeph;
+          findMax(e);
+        }
+      })
+      currDeph--;
+    }
+
+    findMax(arr);
+
+    this.deph = maxDeph;
     return this.deph;
   }
 }
@@ -31,3 +41,25 @@ class DepthCalculator {
 module.exports = {
   DepthCalculator
 };
+
+
+// class DepthCalculator {
+//   constructor() {
+//     this.deph = 1;
+//     this.max = 1;
+//   }
+//   calculateDepth(arr) {
+//     arr.forEach(e => {
+//       console.log(e);
+//       if (Array.isArray(e)) {
+//         this.max++;
+//         if (this.max > this.deph) this.deph = this.max;
+//         this.calculateDepth(e);
+//       }
+//     })
+
+//     this.max--;
+
+//     return this.deph;
+//   }
+// }
